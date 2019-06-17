@@ -8,7 +8,10 @@
 
 <style> /* set the CSS */
 
-body { font: 12px Arial;}
+body {
+  font: 12px Arial;
+  background-color: black;
+}
 
 path {
     stroke: steelblue;
@@ -36,8 +39,12 @@ div.tooltip {
 </style>
 
 <!-- Load d3.js -->
-<script src="https://d3js.org/d3.v4.js"></script>
+<script src="d3.v4.js"></script>
 
 <!-- Create a div where the graph will take place -->
-<div id="my_dataviz", style="background-color: black; text-align: center;"></div>
+<div style="background-color: red; height: 10vh; width: 98vw; margin-top: 0; position: fixed;">
+  {{ button }}
+  {{ slider }}
+</div>
+<div id="my_dataviz", style="background-color: black; text-align: center; height: 100vh;"></div>
 <script src="node_script.js"></script>
