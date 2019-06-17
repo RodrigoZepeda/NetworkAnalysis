@@ -1,0 +1,132 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "name": "Antonio",
+      "depto": "Química teórica",
+      "pubs": 2,
+      "color": "#9B9CF1"
+    },
+    {
+      "id": 2,
+      "name": "Berenice",
+      "depto": "Química teórica",
+      "pubs": 1,
+      "color": "#9B9CF1"
+    },
+    {
+      "id": 3,
+      "name": "Carlos",
+      "depto": "Baterías de flujo",
+      "pubs": 80,
+      "color": "#DBDCE1"
+    },
+    {
+      "id": 4,
+      "name": "Daniela",
+      "depto": "Química práctica",
+      "pubs": 12,
+      "color": "#41C9BC"
+    },
+    {
+      "id": 5,
+      "name": "Enriqueta",
+      "depto": "Química cuántica",
+      "pubs": 3,
+      "color": "#F4A746"
+    },
+    {
+      "id": 6,
+      "name": "Francisco",
+      "depto": "Química de alimentos",
+      "pubs": 0,
+      "color": "#E07A5F"
+    },
+    {
+      "id": 7,
+      "name": "Golondrina",
+      "depto": "Química de alimentos",
+      "pubs": 4,
+      "color": "#E07A5F"
+    },
+    {
+      "id": 8,
+      "name": "Héctor",
+      "depto": "Química de alimentos",
+      "pubs": 9,
+      "color": "#E07A5F"
+    },
+    {
+      "id": 9,
+      "name": "Ivonne",
+      "depto": "Química de alimentos",
+      "pubs": 5,
+      "color": "#E07A5F"
+    },
+    {
+      "id": 10,
+      "name": "Joep",
+      "depto": "Baterías de flujo",
+      "pubs": 5,
+      "color": "#DBDCE1"
+    }
+  ],
+  "links": [
+
+    {
+      "source": 1,
+      "target": 2,
+      "colabs": 3
+    },
+    {
+      "source": 1,
+      "target": 5,
+      "colabs": 2
+    },
+    {
+      "source": 1,
+      "target": 3,
+      "colabs": 5
+    },
+
+    {
+      "source": 2,
+      "target": 3,
+      "colabs": 3
+    },
+            {
+      "source": 2,
+      "target": 7,
+      "colabs": 2
+    }
+    ,
+
+    {
+      "source": 3,
+      "target": 4,
+      "colabs": 1
+    },
+     {
+      "source": 8,
+      "target": 4,
+      "colabs": 1
+    }
+    ,
+    {
+      "source": 4,
+      "target": 5,
+      "colabs": 1
+    }
+    ,
+    {
+      "source": 5,
+      "target": 10,
+      "colabs": 2
+    },
+    {
+      "source": 9,
+      "target": 5,
+      "colabs": 2
+    }
+  ]
+}
