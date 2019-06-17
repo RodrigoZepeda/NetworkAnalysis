@@ -26,31 +26,17 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-//Rectangles for debugging //outer
-/*
-inner.append('rect')
-       .attr('fill', outercolor)
-       .attr('width', innerWidth)
-       .attr('height', innerHeight);
-*/
 var inner = svg.append('g')
             .attr('transform', 'translate(' + padding.left + ',' + padding.top + ')');
-/*
-//Rectangles for debugging
-inner.append('rect')
-    .attr('fill', innercolor)
-    .attr('width', width)
-    .attr('height', height)
+
 
 function zoomed() {
   inner.attr("transform", d3.event.transform);
-  //node.attr("transform", d3.event.transform);
-  //link.attr("transform", d3.event.transform);
 }
 
 inner.append("g")
     .attr("transform","translate(" + margin.left + "," + margin.top + ")");
-*/
+
 
 svg.call(d3.zoom().on("zoom", function () {
   inner.attr("transform", d3.event.transform)
