@@ -5,7 +5,8 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
 <meta name='description' content='Awesome plot'>
 <meta name='author' content='Rodrigo Zepeda Tello'>
-
+<head>
+<link rel="stylesheet" href="bootstrap.min.css">
 <style> /* set the CSS */
 
 body {
@@ -24,27 +25,59 @@ path {
   stroke-opacity: 0.6;
 }
 
+.btn-file {
+   background-color: white;
+   border-color: cyan;
+}
+
 div.tooltip {
     position: absolute;
     text-align: left;
-    width: 150px;
-    height: 50px;
+    width: 200px;
+    height: 100px;
     padding: 2px;
-    font: 12px sans-serif;
+    color: black;
+    font: 16px sans-serif;
     border: 0px;
     border-radius: 2px;
     pointer-events: none;
 }
 
 </style>
-
+</head>
 <!-- Load d3.js -->
 <script src="d3.v4.js"></script>
 
 <!-- Create a div where the graph will take place -->
-<div style="background-color: red; height: 10vh; width: 98vw; margin-top: 0; position: fixed;">
-  {{ button }}
-  {{ slider }}
+<div style="height: 100px; width: 100vw; position: fixed; text-align: center; padding-left: 20px; padding-right: 20px; padding-top: 10px;" class="card text-white bg-primary mb-3">
+  {{
+    fluidRow(
+        column(3,
+            sliderInput("obs", "Número mínimo de coautorías",
+                        min = 1, max = 1000, value = 500)
+        ),
+
+        column(3,
+          fileInput("file1", "Archivo",
+                    multiple = FALSE,
+                    accept = c("text/csv",
+                             "text/comma-separated-values,text/plain",
+                             ".csv"))
+        ),
+
+        column(3,
+          selectizeInput(
+          'depto', 'Departamento', choices = c("depto1","depto2","depto3"), multiple = TRUE
+          )
+        ),
+
+        column(3,
+          selectizeInput(
+          'autor', 'Autor', choices = c("Pedro Infante","Tin Tan","Héctor Gómez","Juan Gómez"), multiple = TRUE
+          )
+        )
+    )
+  }}
 </div>
-<div id="my_dataviz", style="background-color: black; text-align: center; height: 100vh;"></div>
+<div id="my_dataviz" style="background-color: black; text-align: center; height: 100vh;"></div>
 <script src="node_script.js"></script>

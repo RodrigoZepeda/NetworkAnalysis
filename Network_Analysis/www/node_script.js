@@ -3,8 +3,8 @@ var circlefact = 5;
 var strength = -200;
 
 // set the dimensions and margins of the graph
-var outercolor = "blue";
-var innercolor = "red";
+var outercolor = "black";
+var innercolor = "black";
 
 var margin = {top: 10, right: 10, bottom: 10, left: 10};
 var padding = {top: 30, right: 30, bottom: 30, left: 30};
@@ -17,12 +17,16 @@ var innerWidth   = outerWidth  - margin.left  - margin.right,
 
 //Creation of canvas
 var svg = d3.select('#my_dataviz').append('svg')
-                .attr('width', outerWidth)
-                .attr('height', outerHeight)
+                .attr('width', "100%")
+                .attr('height', "100%")
                 .attr("fill", outercolor)
 
 // Define the div for the tooltip
 var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+var div2 = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
@@ -56,7 +60,21 @@ d3.json("data.json", function(error, graph) {
       .data(graph.links)
       .enter().append("line")
       .attr("stroke-width", function(d) { return (d.colabs); })
-      .style("stroke", "#999");
+      .style("stroke", "#999")
+      .on("mouseover", function(d) {
+            div2.transition()
+                .duration(200)
+                .style("opacity", .9);
+            div2.html("<b>Conexión</b>" + "<br/>" + d.sourcename + "<br/>" + d.targetname + "<br/><i>" + d.colabs + " publicaciones</i>")
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px")
+                .style("background", "#999");
+            })
+        .on("mouseout", function(d) {
+            div2.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
 
   var node = inner.append("g")
       .attr("class", "nodes")
@@ -69,7 +87,7 @@ d3.json("data.json", function(error, graph) {
             div.transition()
                 .duration(200)
                 .style("opacity", .9);
-            div	.html("<b>" + d.name + "</b>"+ "<br/>"  + "<i>" + d.depto + "</i>" + "<br/>" + "Pubs " + d.pubs)
+            div	.html("<b>" + d.name + "</b>"+ "<br/>"  + "<i>" + d.depto + "</i>" + "<br/>" + "Publicaciones " + d.pubs)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px")
                 .style("background", d.color);
@@ -79,13 +97,10 @@ d3.json("data.json", function(error, graph) {
                 .duration(500)
                 .style("opacity", 0);
         })
-      .call(d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended));
-
-  node.append("title")
-      .text(function(d) { return d.name; });
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
 
   simulation
       .nodes(graph.nodes)

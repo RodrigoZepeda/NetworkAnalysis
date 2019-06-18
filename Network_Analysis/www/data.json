@@ -76,27 +76,37 @@
     {
       "source": 1,
       "target": 2,
+      "sourcename": "Antonio",
+      "targetname": "Berenice",
       "colabs": 3
     },
     {
       "source": 1,
       "target": 5,
+      "sourcename": "Antonio",
+      "targetname": "Enriqueta",
       "colabs": 2
     },
     {
       "source": 1,
+      "sourcename": "Antonio",
+      "targetname": "Carlos",
       "target": 3,
       "colabs": 5
     },
 
     {
       "source": 2,
+      "sourcename": "Berenice",
       "target": 3,
+      "targetname": "Carlos",
       "colabs": 3
     },
-            {
+    {
       "source": 2,
+      "sourcename": "Berenice",
       "target": 7,
+      "targetname": "Golondrina",
       "colabs": 2
     }
     ,
@@ -104,28 +114,38 @@
     {
       "source": 3,
       "target": 4,
+      "sourcename": "Carlos",
+      "targetname": "Daniela",
       "colabs": 1
     },
      {
       "source": 8,
+      "sourcename": "Héctor",
       "target": 4,
+      "targetname": "Daniela",
       "colabs": 1
     }
     ,
     {
       "source": 4,
+      "sourcename": "Daniela",
       "target": 5,
+      "targetname": "Enriqueta",
       "colabs": 1
     }
     ,
     {
       "source": 5,
+      "sourcename": "Enriqueta",
       "target": 10,
+      "targetname": "Joep",
       "colabs": 2
     },
     {
       "source": 9,
+      "sourcename": "Ivonne",
       "target": 5,
+      "targetname": "Enriqueta",
       "colabs": 2
     }
   ]
