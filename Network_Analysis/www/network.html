@@ -11,14 +11,9 @@
 
 body {
   font: 12px Arial;
-  background-color: black;
+  background-color: #000026;
 }
 
-path {
-    stroke: steelblue;
-    stroke-width: 2;
-    fill: none;
-}
 
 .links line {
   stroke: #999;
@@ -27,7 +22,7 @@ path {
 
 .btn-file {
    background-color: white;
-   border-color: cyan;
+   border-color: #000026;
 }
 
 div.tooltip {
@@ -54,7 +49,7 @@ div.tooltip {
     fluidRow(
         column(3,
             sliderInput("obs", "Número mínimo de coautorías",
-                        min = 1, max = 1000, value = 500)
+                        min = 0, max = 10, value = 0)
         ),
 
         column(3,
@@ -96,5 +91,5 @@ div.tooltip {
   }}
 </div>
 
-<div id="my_dataviz" style="background-color: black; text-align: center; height: 100vh;"></div>
+<div id="my_dataviz" style="background-color: #000026; text-align: center; height: 100vh;"></div>
 <script src="node_script.js"></script>

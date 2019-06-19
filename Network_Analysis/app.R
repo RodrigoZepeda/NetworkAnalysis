@@ -2,12 +2,22 @@
 library(shiny)
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {
+server <- function(input, output, session) {
 
-    2
+
+  observe({
+    session$sendCustomMessage("force", input$strength)
+  })
+  
+  observe({
+    session$sendCustomMessage("scale", input$scale)
+  })
+  
+  1
+  
+  
+ 
 
 }
 
-shinyApp(ui = htmlTemplate("www/network.html",
-                           button = actionButton("action", "Action"),
-                           slider = sliderInput("x", "X", 1, 100, 50)), server)
+shinyApp(ui = htmlTemplate("www/network.html"), server)

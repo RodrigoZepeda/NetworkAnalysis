@@ -1,55 +1,53 @@
 //Variables
 var circlefact = 5;
-var strength = -200;
+var strength   = 200;
+var outercolor = "#00003f";
+
+Shiny.addCustomMessageHandler('force', function(myforce) {
+    alert("The force variable is " + myforce);
+});
+
+Shiny.addCustomMessageHandler('scale', function(myscale) {
+    alert("The scale variable is " + myscale);
+});
 
 // set the dimensions and margins of the graph
-var outercolor = "black";
-var innercolor = "black";
-
-var margin = {top: 10, right: 10, bottom: 10, left: 10};
+var margin  = {top: 10, right: 10, bottom: 10, left: 10};
 var padding = {top: 30, right: 30, bottom: 30, left: 30};
 
 var innerWidth   = outerWidth  - margin.left  - margin.right,
     innerHeight  = outerHeight - margin.top   - margin.bottom,
     width        = innerWidth  - padding.left - padding.right,
-    height       = innerHeight - padding.top  - padding.bottom,
-    background   = false;
+    height       = innerHeight - padding.top  - padding.bottom;
 
 //Creation of canvas
 var svg = d3.select('#my_dataviz').append('svg')
                 .attr('width', "100%")
                 .attr('height', "100%")
-                .attr("fill", outercolor)
+                .attr("fill", outercolor);
 
-// Define the div for the tooltip
+//Tooltip for nodes
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
+//Tooltip for lines
 var div2 = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
+//Function for zooming
 var inner = svg.append('g')
             .attr('transform', 'translate(' + padding.left + ',' + padding.top + ')');
-
-
-function zoomed() {
-  inner.attr("transform", d3.event.transform);
-}
-
-inner.append("g")
-    .attr("transform","translate(" + margin.left + "," + margin.top + ")");
-
 
 svg.call(d3.zoom().on("zoom", function () {
   inner.attr("transform", d3.event.transform)
 }))
 
-
+//Simulation characteristics
 var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody().strength(strength))
+    .force("charge", d3.forceManyBody().strength(-1*strength))
     .force("center", d3.forceCenter(width / 2, height / 2));
 
 d3.json("data.json", function(error, graph) {
@@ -70,11 +68,11 @@ d3.json("data.json", function(error, graph) {
                 .style("top", (d3.event.pageY - 28) + "px")
                 .style("background", "#999");
             })
-        .on("mouseout", function(d) {
-            div2.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
+      .on("mouseout", function(d) {
+          div2.transition()
+              .duration(500)
+              .style("opacity", 0);
+            });
 
   var node = inner.append("g")
       .attr("class", "nodes")
@@ -92,15 +90,15 @@ d3.json("data.json", function(error, graph) {
                 .style("top", (d3.event.pageY - 28) + "px")
                 .style("background", d.color);
             })
-        .on("mouseout", function(d) {
-            div.transition()
-                .duration(500)
-                .style("opacity", 0);
-        })
-        .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended));
+      .on("mouseout", function(d) {
+          div.transition()
+              .duration(500)
+              .style("opacity", 0);
+            })
+      .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
 
   simulation
       .nodes(graph.nodes)
