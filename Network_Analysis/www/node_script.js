@@ -1,15 +1,20 @@
+//SEE
+//https://gist.github.com/steveharoz/8c3e2524079a8c440df60c1ab72b5d03#file-code-js
 //Variables
 var circlefact = 5;
 var strength   = 200;
 var outercolor = "#00003f";
 
 Shiny.addCustomMessageHandler('force', function(myforce) {
-    alert("The force variable is " + myforce);
+    strength = myforce;
+    updateAll();
 });
-
+/*
 Shiny.addCustomMessageHandler('scale', function(myscale) {
-    alert("The scale variable is " + myscale);
+    circlefact = myscale;
+    updateAll();
 });
+*/
 
 // set the dimensions and margins of the graph
 var margin  = {top: 10, right: 10, bottom: 10, left: 10};
@@ -44,16 +49,44 @@ svg.call(d3.zoom().on("zoom", function () {
   inner.attr("transform", d3.event.transform)
 }))
 
-//Simulation characteristics
-var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody().strength(-1*strength))
-    .force("center", d3.forceCenter(width / 2, height / 2));
 
-d3.json("data.json", function(error, graph) {
-  if (error) throw error;
+// force simulator
+var simulation = d3.forceSimulation();
 
-  var link = inner.append("g")
+// set up the simulation and event to update locations after each tick
+function initializeSimulation() {
+  simulation.nodes(graph.nodes);
+  initializeForces();
+  simulation.on("tick", ticked);
+}
+
+// add forces to the simulation
+function initializeForces() {
+    // add forces and associate each with a name
+    simulation
+        .force("link", d3.forceLink())
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceCenter(width / 2, height / 2));
+
+    // apply properties to each of the forces
+    updateForces();
+}
+
+// apply new force properties
+function updateForces() {
+
+    simulation.force("charge")
+        .strength(-1*strength);
+    simulation.force("link")
+        .id(function(d) {return d.id;});
+
+    simulation.alpha(1).restart();
+}
+
+// generate the svg objects and force simulation
+function initializeDisplay() {
+
+  link = inner.append("g")
       .selectAll("line")
       .data(graph.links)
       .enter().append("line")
@@ -74,7 +107,7 @@ d3.json("data.json", function(error, graph) {
               .style("opacity", 0);
             });
 
-  var node = inner.append("g")
+  node = inner.append("g")
       .attr("class", "nodes")
       .selectAll("circle")
       .data(graph.nodes)
@@ -99,15 +132,23 @@ d3.json("data.json", function(error, graph) {
           .on("start", dragstarted)
           .on("drag", dragged)
           .on("end", dragended));
+}
 
-  simulation
-      .nodes(graph.nodes)
-      .on("tick", ticked);
+
+d3.json("data.json", function(error, _graph) {
+  if (error) throw error;
+  graph = _graph;
+  initializeDisplay();
+  initializeSimulation();
 
   simulation.force("link")
       .links(graph.links);
 
-  function ticked() {
+
+});
+
+// update the display positions after each simulation tick
+function ticked() {
     link
         .attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
@@ -117,9 +158,13 @@ d3.json("data.json", function(error, graph) {
     node
         .attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
-  }
-});
 
+}
+
+// convenience function to update everything (run after UI input)
+function updateAll() {
+    updateForces();
+}
 
 function dragstarted(d) {
   if (!d3.event.active) simulation.alphaTarget(0.3).restart();

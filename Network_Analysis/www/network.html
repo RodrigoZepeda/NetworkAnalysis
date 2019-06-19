@@ -80,13 +80,14 @@ div.tooltip {
   {{
     fluidRow(
 
-        column(6,
-          numericInput("strength", "Repulsión:", 400, min = 0, max = 1000)
-        ),
-
-        column(6,
-          numericInput("scale", "Escala:", 5, min = 0, max = 100)
+        column(12,
+          sliderInput("strength", "Repulsión",
+                      min = 0, max = 1000, value = 200)
         )
+        #
+        #column(6,
+        #  numericInput("scale", "Escala:", 5, min = 0, max = 100)
+        #)
     )
   }}
 </div>
