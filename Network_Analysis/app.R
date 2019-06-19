@@ -9,9 +9,9 @@ server <- function(input, output, session) {
     session$sendCustomMessage("force", input$strength)
   })
    
-  observe({
-    session$sendCustomMessage("scale", input$scale)
-  })
+  # observe({
+  #   session$sendCustomMessage("scale", input$scale)
+  # })
   
   
  
