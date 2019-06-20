@@ -1,20 +1,20 @@
 //SEE
 //https://gist.github.com/steveharoz/8c3e2524079a8c440df60c1ab72b5d03#file-code-js
 //Variables
-var circlefact = 5;
-var strength   = 200;
+var circlefact = 10;
+var strength   = 1000;
 var outercolor = "#00003f";
 
 Shiny.addCustomMessageHandler('force', function(myforce) {
     strength = myforce;
     updateAll();
 });
-/*
+
 Shiny.addCustomMessageHandler('scale', function(myscale) {
     circlefact = myscale;
     updateAll();
 });
-*/
+
 
 // set the dimensions and margins of the graph
 var margin  = {top: 10, right: 10, bottom: 10, left: 10};
@@ -91,7 +91,7 @@ function initializeDisplay() {
       .data(graph.links)
       .enter().append("line")
       .attr("stroke-width", function(d) { return (d.colabs); })
-      .style("stroke", "#999")
+      .style("stroke", "white")
       .on("mouseover", function(d) {
             div2.transition()
                 .duration(200)
@@ -99,7 +99,7 @@ function initializeDisplay() {
             div2.html("<b>Conexión</b>" + "<br/>" + d.sourcename + "<br/>" + d.targetname + "<br/><i>" + d.colabs + " publicaciones</i>")
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px")
-                .style("background", "#999");
+                .style("background", "white");
             })
       .on("mouseout", function(d) {
           div2.transition()
@@ -135,7 +135,7 @@ function initializeDisplay() {
 }
 
 
-d3.json("data.json", function(error, _graph) {
+d3.json("data1.json", function(error, _graph) {
   if (error) throw error;
   graph = _graph;
   initializeDisplay();
@@ -143,8 +143,6 @@ d3.json("data.json", function(error, _graph) {
 
   simulation.force("link")
       .links(graph.links);
-
-
 });
 
 // update the display positions after each simulation tick
@@ -161,9 +159,16 @@ function ticked() {
 
 }
 
+// update the display based on the forces (but not positions)
+function updateDisplay() {
+    node.attr("r", function(d) {return  circlefact*Math.log(d.pubs + 2)})
+}
+
+
 // convenience function to update everything (run after UI input)
 function updateAll() {
     updateForces();
+    updateDisplay();
 }
 
 function dragstarted(d) {

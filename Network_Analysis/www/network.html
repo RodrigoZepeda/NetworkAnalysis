@@ -47,17 +47,16 @@ div.tooltip {
 <div style="height: 100px; width: 100vw; position: fixed; text-align: center; padding-left: 20px; padding-right: 20px; padding-top: 10px;" class="card text-white bg-primary mb-3">
   {{
     fluidRow(
+
         column(3,
-            sliderInput("obs", "Número mínimo de coautorías",
-                        min = 0, max = 10, value = 0)
+            numericInput("obs", "Número mínimo de coautorías",
+                        min = 0, max = 100, value = 0)
         ),
 
         column(3,
-          fileInput("file1", "Archivo",
-                    multiple = FALSE,
-                    accept = c("text/csv",
-                             "text/comma-separated-values,text/plain",
-                             ".csv"))
+            selectizeInput(
+            'gender', 'Género', choices = c("M","F","Otro"), multiple = TRUE
+            )
         ),
 
         column(3,
@@ -80,14 +79,13 @@ div.tooltip {
   {{
     fluidRow(
 
-        column(12,
-          sliderInput("strength", "Repulsión",
-                      min = 0, max = 1000, value = 200)
+        column(6,
+          numericInput("strength", "Repulsión:", 1000, min = 0, max = 100)
+        ),
+
+        column(6,
+          numericInput("scale", "Escala:", 10, min = 0, max = 100)
         )
-        #
-        #column(6,
-        #  numericInput("scale", "Escala:", 5, min = 0, max = 100)
-        #)
     )
   }}
 </div>
